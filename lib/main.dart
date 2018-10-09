@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hacker_news/src/home.dart';
+import 'package:hacker_news/src/app.dart';
 
 void main(){
-  runApp(Home());
+  runApp(App());
 }
