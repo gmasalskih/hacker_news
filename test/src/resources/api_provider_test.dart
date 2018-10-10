@@ -7,7 +7,6 @@ import 'package:http/testing.dart';
 import 'package:test/test.dart';
 
 void main() {
-  fetchTopIds();
   test('First test', fetchTopIds);
   test('Second test', fetchItem);
 }
