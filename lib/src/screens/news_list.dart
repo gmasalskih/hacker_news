@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hacker_news/src/blocs/stories_provider.dart';
 
@@ -16,21 +14,21 @@ class NewsList extends StatelessWidget {
     );
   }
 
-  Widget buildList(StoriesBloc bloc){
+  Widget buildList(StoriesBloc bloc) {
     return StreamBuilder(
       stream: bloc.topIds,
-      builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot){
+      builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
         bloc.fetchTopIds();
-        if(!snapshot.hasData){
+        if (!snapshot.hasData) {
           return Container(
             child: Center(
               child: CircularProgressIndicator(),
             ),
           );
-        } else{
+        } else {
           return ListView.builder(
             itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index){
+            itemBuilder: (BuildContext context, int index) {
               return Text('$index - ${snapshot.data[index]}');
             },
           );

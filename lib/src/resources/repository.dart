@@ -18,7 +18,7 @@ class Repository {
 
   Future<ItemModel> fetchItem(int id) async {
     ItemModel itemModel;
-    Source source;
+//    Source source;
     sources.forEach((it) async => itemModel ??= await it.fetchItem(id));
     if (itemModel != null) caches.forEach((it) async => it.addItem(itemModel));
     return itemModel;
