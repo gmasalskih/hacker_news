@@ -5,9 +5,6 @@ import 'package:hacker_news/src/resources/api_provider.dart';
 import 'package:hacker_news/src/resources/db_provider.dart';
 
 class Repository {
-//  ApiProvider apiProvider = ApiProvider();
-//  DbProvider dbProvider = DbProvider();
-
   List<Source> sources = <Source>[ApiProvider(), dbProvider];
 
   List<Cache> caches = <Cache>[dbProvider];

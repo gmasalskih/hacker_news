@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hacker_news/src/blocs/stories_provider.dart';
+import 'package:hacker_news/src/widgets/news_listI_tile.dart';
 
 class NewsList extends StatelessWidget {
   @override
@@ -20,19 +21,21 @@ class NewsList extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
         bloc.fetchTopIds();
         if (!snapshot.hasData) {
-          return Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else {
-          return ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Text('$index - ${snapshot.data[index]}');
-            },
+          return Center(
+            child: CircularProgressIndicator(),
           );
         }
+        return ListView.builder(
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) {
+            print(snapshot.data.length);
+//            bloc.fetchItem(snapshot.data[index]);
+//            return NewsListTile(
+//              itemId: snapshot.data[index],
+//            );
+              return Text('$index - ${snapshot.data[index]}');
+          },
+        );
       },
     );
   }

@@ -7,31 +7,39 @@ import 'package:rxdart/rxdart.dart';
 class StoriesBloc {
   final _repository = Repository();
   final _topIds = PublishSubject<List<int>>();
-  final _items = BehaviorSubject<int>();
-  Observable<Map<int, Future<ItemModel>>> items;
+  final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
+  final _itemsFetcher = PublishSubject<int>();
 
   Observable<List<int>> get topIds => _topIds.stream;
-  Function(int) get fetchItem => _items.sink.add;
+
+  Observable<Map<int, Future<ItemModel>>> get items => _itemsOutput.stream;
+
+  Function(int) get fetchItem => _itemsFetcher.sink.add;
 
   StoriesBloc() {
-    items = _items.stream.transform(_itemTransformer());
+//    _itemsFetcher.stream.transform(_itemTransformer()).pipe(_itemsOutput);
   }
 
   _itemTransformer() {
     return ScanStreamTransformer(
-        (Map<int, Future<ItemModel>> cache, int id, int index) {
-      cache[id] = _repository.fetchItem(id);
-      return cache;
-    }, <int, Future<ItemModel>>{});
+      (Map<int, Future<ItemModel>> cache, int id, int index) {
+//        print('$id - $index');
+        cache[id] = _repository.fetchItem(id);
+        return cache;
+      },
+      <int, Future<ItemModel>>{},
+    );
   }
 
   fetchTopIds() async {
     final List<int> ids = await _repository.fetchTopIds();
+    print(ids);
     _topIds.sink.add(ids);
   }
 
   dispose() {
     _topIds.close();
-    _items.close();
+    _itemsOutput.close();
+    _itemsFetcher.close();
   }
 }
